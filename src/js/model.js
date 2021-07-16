@@ -31,6 +31,10 @@ export const simulatedResponse = [
 		baseValue: "PPX",
 		ratio: "201",
 	},
+	{
+		baseValue: "AXC",
+		ratio: "20.1",
+	},
 ];
 
 export const simulatedAmount = 500;

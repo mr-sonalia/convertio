@@ -1,5 +1,7 @@
 // * Typography
-$font-family: var(--bs-font-sans-serif);
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+$font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+	"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 $fw-light: 300;
 $fw-regular: 400;
 $fw-medium: 500;
@@ -16,6 +18,9 @@ $clr-green-200: rgba(104, 178, 97, 1);
 
 //  * Default Configuration
 
+* {
+	font-size: 62.5%;
+}
 body {
 	font-family: $font-family;
 	background-color: $clr-white-100;
@@ -313,6 +318,7 @@ a.nav-link {
 }
 
 .h1 {
+	font-size: 4rem;
 	font-weight: $fw-bold;
 	text-align: center;
 }
