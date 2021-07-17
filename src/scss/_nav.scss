@@ -5,9 +5,9 @@
 
 	li.nav-item {
 		padding: 1rem;
+
 		&:not(:first-child) {
 			position: relative;
-			padding-right: 2rem;
 			&::after {
 				content: "";
 				position: absolute;
@@ -15,8 +15,23 @@
 				left: -1px;
 				width: 2px;
 				height: 2px;
+				transform: translateY(-50%);
 				background-color: $clr-black-200;
 			}
+		}
+		&:last-child {
+			padding-right: 2rem;
+		}
+	}
+
+	a.nav-link {
+		&:hover {
+			color: $clr-green-200;
+		}
+		&:focus {
+			color: $clr-green-200;
+			outline: 1px dashed $clr-green-200;
+			outline-offset: 3px;
 		}
 	}
 }

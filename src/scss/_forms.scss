@@ -1,0 +1,30 @@
+.input-field {
+	&-container {
+		position: relative;
+	}
+
+	border: 1px solid $clr-black-200;
+	border-radius: 6px;
+	padding: 1.4rem 2rem;
+
+	&:focus {
+		color: $clr-black-200;
+		border-color: $clr-green-200;
+		box-shadow: 0px 0px 0px 2.5px $clr-green-100;
+	}
+
+	&.numeric {
+		padding-left: 6.4rem;
+	}
+}
+
+.base-currency-holder {
+	position: absolute;
+	bottom: 1.6rem;
+	left: 0.3rem;
+	width: 5rem;
+	padding: 0.2rem 0rem;
+	border-right: 1px solid $clr-black-200;
+	display: flex;
+	justify-content: center;
+}

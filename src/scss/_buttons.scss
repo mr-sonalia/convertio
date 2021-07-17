@@ -1,0 +1,43 @@
+.button {
+	text-align: center;
+	padding: 1.8rem 0rem;
+	border-radius: 6px;
+
+	&-group {
+		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		justify-content: stretch;
+	}
+	&-primary {
+		// border: 1px solid black;
+		background-color: $clr-black-200;
+	}
+	&-lg {
+		grid-column: 1 / span 2;
+		// prettier-ignore
+		box-shadow:
+        0 2.8px 2.2px $clr-black-50,
+        0 6.7px 5.3px $clr-black-50,
+        0 12.5px 10px $clr-black-50,
+        0 22.3px 17.9px $clr-black-50;
+	}
+
+	&-md {
+		// prettier-ignore
+		box-shadow:
+        0 2.8px 2.2px $clr-black-50,
+        0 6.7px 5.3px $clr-black-50,
+        0 12.5px 10px $clr-black-50;
+	}
+	&.active {
+		background-color: $clr-green-200;
+
+		// prettier-ignore
+		box-shadow:
+        0 2.8px 2.2px $clr-green-50,
+        0 6.7px 5.3px $clr-green-50,
+        0 12.5px 10px $clr-green-50;
+	}
+}
