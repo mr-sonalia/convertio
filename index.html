@@ -25,41 +25,54 @@
 			</div>
 		</nav>
 		<div class="container-fluid">
-			<div class="button-group pad-l-2 pad-r-2 mar-t-3 mar-b-8">
-				<a href="#" class="button button-primary button-md active">Conversion Rates</a>
-				<a href="#" class="button button-primary button-md">A to B Conversion</a>
+			<div class="row">
+				<div class="col-sm-0 col-md-4"></div>
+				<div class="col-sm-12 col-md-4">
+					<div class="button-group pad-l-2 pad-r-2 mar-t-3 mar-b-8">
+						<a href="#" class="button button-primary button-md active">Conversion Rates</a>
+						<a href="#" class="button button-primary button-md">A to B Conversion</a>
+					</div>
+					<form class="form pad-l-2 pad-r-2" method="get">
+						<div class="mar-b-3 input-field-container">
+							<label for="base-currency" class="label mar-b-1">Select base currency</label>
+							<input
+								class="form-control input-field"
+								list="base-currencies"
+								name="base-currency"
+								id="base-currency"
+								placeholder="Select any one"
+							/>
+							<datalist id="base-currencies">
+								<option value="USD"></option>
+								<option value="INR"></option>
+								<option value="AUD"></option>
+								<option value="CNY"></option>
+								<option value="SCD"></option>
+							</datalist>
+						</div>
+						<div class="mar-b-6 input-field-container">
+							<label for="amount" class="label mar-b-1">Enter amount</label>
+							<div class="base-currency-holder">
+								<span class="base-currency">USD</span>
+							</div>
+							<input
+								type="number"
+								min="0"
+								class="form-control input-field numeric"
+								id="amount"
+								aria-describedby="null"
+								placeholder="500.50"
+							/>
+						</div>
+						<div class="mar-b-3 input-field-container">
+							<div class="button-group">
+								<a href="#" class="button button-primary button-lg">Get Started!</a>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-sm-0 col-md-4"></div>
 			</div>
-			<form class="form pad-l-2 pad-r-2" method="get">
-				<div class="mar-b-3 input-field-container">
-					<label for="base-currency" class="label mar-b-1">Select base currency</label>
-					<input
-						class="form-control input-field"
-						list="base-currencies"
-						name="base-currency"
-						id="base-currency"
-						placeholder="Select any one"
-					/>
-					<datalist id="base-currencies">
-						<option value="USD"></option>
-						<option value="INR"></option>
-						<option value="AUD"></option>
-						<option value="CNY"></option>
-						<option value="SCD"></option>
-					</datalist>
-				</div>
-				<div class="mar-b-6 input-field-container">
-					<label for="amount" class="label mar-b-1">Enter amount</label>
-					<div class="base-currency-holder">
-						<span class="base-currency">USD</span>
-					</div>
-					<input type="number" min="0" class="form-control input-field numeric" id="amount" aria-describedby="null" placeholder="500.50" />
-				</div>
-				<div class="mar-b-3 input-field-container">
-					<div class="button-group">
-						<a href="#" class="button button-primary button-lg">Get Started!</a>
-					</div>
-				</div>
-			</form>
 		</div>
 	</body>
 </html>
