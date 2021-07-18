@@ -18,26 +18,26 @@
 		grid-column: 1 / span 2;
 		// prettier-ignore
 		box-shadow:
-        0 2.8px 2.2px $clr-black-50,
-        0 6.7px 5.3px $clr-black-50,
-        0 12.5px 10px $clr-black-50,
-        0 22.3px 17.9px $clr-black-50;
+        0 2.8px 5px $clr-black-50,
+        0 6.7px 10px $clr-black-50,
+        0 12.5px 15px $clr-black-50,
+        0 22.3px 18px $clr-black-50;
 	}
 
 	&-md {
 		// prettier-ignore
 		box-shadow:
-        0 2.8px 2.2px $clr-black-50,
-        0 6.7px 5.3px $clr-black-50,
-        0 12.5px 10px $clr-black-50;
+        0 2.8px 5px $clr-black-50,
+        0 6.7px 10px $clr-black-50,
+        0 12.5px 15px $clr-black-50;
 	}
 	&.active {
 		background-color: $clr-green-200;
 
 		// prettier-ignore
 		box-shadow:
-        0 2.8px 2.2px $clr-green-50,
-        0 6.7px 5.3px $clr-green-50,
-        0 12.5px 10px $clr-green-50;
+        0 2.8px 5px $clr-green-50,
+        0 6.7px 10px $clr-green-50,
+        0 12.5px 15px $clr-green-50;
 	}
 }
