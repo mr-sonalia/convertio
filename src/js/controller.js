@@ -1,13 +1,34 @@
 "use strict";
+
+// * IMPORTS
 import * as model from "./model.js";
-// import { amountRatioMultiplier } from "./helpers.js";
 import ConversionRatesView from "./views/ConversionRatesView.js";
-// import "core-js/stable";
+import StaticView from "./views/StaticView.js";
+
+// * VARIABLES
+
+// * FUNCTIONS
 const controlDataflow = () => {
-	ConversionRatesView.renderTableData(model.simulatedAmount, model.simulatedResponse);
+	// StaticView.renderStatic();
+	ConversionRatesView.renderNavbar();
+	ConversionRatesView.renderInputForm();
+	// ConversionRatesView.renderConversionRates();
+	// ConversionRatesView.renderResults(model.simulatedAmount, model.simulatedResponse);
+	// ConversionRatesView.renderConversionRates();
 };
 
+// * INIT
 const init = function () {
 	controlDataflow();
 };
-// init();
+init();
+
+// * EVENT LISTENERS
+window.addEventListener("DOMContentLoaded", (event) => {
+	const renderA = document.getElementById("renderA");
+
+	// ** View change event
+	renderA.addEventListener("click", async function (event) {
+		ConversionRatesView.renderResults(model.simulatedAmount, model.simulatedResponse);
+	});
+});

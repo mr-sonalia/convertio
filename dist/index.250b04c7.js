@@ -447,15 +447,29 @@ var _modelJs = require("./model.js");
 var _viewsConversionRatesViewJs = require("./views/ConversionRatesView.js");
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 var _viewsConversionRatesViewJsDefault = _parcelHelpers.interopDefault(_viewsConversionRatesViewJs);
-// import "core-js/stable";
+require("./views/StaticView.js");
+// * VARIABLES
+// * FUNCTIONS
 const controlDataflow = () => {
-  _viewsConversionRatesViewJsDefault.default.renderTableData(_modelJs.simulatedAmount, _modelJs.simulatedResponse);
+  // StaticView.renderStatic();
+  _viewsConversionRatesViewJsDefault.default.renderNavbar();
+  _viewsConversionRatesViewJsDefault.default.renderInputForm();
 };
+// * INIT
 const init = function () {
   controlDataflow();
 };
+init();
+// * EVENT LISTENERS
+window.addEventListener("DOMContentLoaded", event => {
+  const renderA = document.getElementById("renderA");
+  // ** View change event
+  renderA.addEventListener("click", async function (event) {
+    _viewsConversionRatesViewJsDefault.default.renderResults(_modelJs.simulatedAmount, _modelJs.simulatedResponse);
+  });
+});
 
-},{"./model.js":"1hp6y","./views/ConversionRatesView.js":"7kQv5","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1hp6y":[function(require,module,exports) {
+},{"./model.js":"1hp6y","./views/ConversionRatesView.js":"7kQv5","./views/StaticView.js":"5U5Dr","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1hp6y":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 _parcelHelpers.export(exports, "simulatedResponse", function () {
@@ -465,6 +479,33 @@ _parcelHelpers.export(exports, "simulatedAmount", function () {
   return simulatedAmount;
 });
 const simulatedResponse = [{
+  baseValue: "INR",
+  ratio: "72.4570"
+}, {
+  baseValue: "CND",
+  ratio: "1.2580"
+}, {
+  baseValue: "CNY",
+  ratio: "2.8585"
+}, {
+  baseValue: "DNR",
+  ratio: "0.5528"
+}, {
+  baseValue: "BLV",
+  ratio: "720"
+}, {
+  baseValue: "MDN",
+  ratio: "11.3431"
+}, {
+  baseValue: "DKE",
+  ratio: "7"
+}, {
+  baseValue: "PPX",
+  ratio: "201"
+}, {
+  baseValue: "AXC",
+  ratio: "20.1"
+}, {
   baseValue: "INR",
   ratio: "72.4570"
 }, {
@@ -539,73 +580,165 @@ exports.export = function (dest, destName, get) {
 },{}],"7kQv5":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
+var _ViewJs = require("./View.js");
 var _helpersJs = require("../helpers.js");
-function _classPrivateFieldSet(receiver, privateMap, value) {
-  var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set");
-  _classApplyDescriptorSet(receiver, descriptor, value);
-  return value;
-}
-function _classApplyDescriptorSet(receiver, descriptor, value) {
-  if (descriptor.set) {
-    descriptor.set.call(receiver, value);
-  } else {
-    if (!descriptor.writable) {
-      throw new TypeError("attempted to set read only private field");
-    }
-    descriptor.value = value;
+class ConversionratesView extends _ViewJs.View {
+  renderInputForm() {
+    this.renderStatic();
+    const markup = `
+		<form class="form pad-l-2 pad-r-2" method="get">
+			<div class="mar-b-3 input-field-container">
+				<label for="base-currency" class="label mar-b-1">Select base currency</label>
+				<input class="form-control input-field" list="base-currencies" name="base-currency" id="base-currency" placeholder="Select any one" />
+				<datalist id="base-currencies">
+					<option value="USD"></option>
+					<option value="INR"></option>
+					<option value="AUD"></option>
+					<option value="CNY"></option>
+					<option value="SCD"></option>
+				</datalist>
+			</div>
+			<div class="mar-b-6 input-field-container">
+				<label for="amount" class="label mar-b-1">Enter amount</label>
+				<div class="base-currency-holder">
+					<span class="base-currency">USD</span>
+				</div>
+				<input type="number" min="0" class="form-control input-field numeric" id="amount" aria-describedby="null" placeholder="500.50" />
+			</div>
+			<div class="mar-b-3 input-field-container">
+				<div class="button-group">
+					<a id="renderA" href="#" class="button button-primary button-lg">Show Conversion Rates</a>
+				</div>
+			</div>
+		</form>
+		`;
+    this.mainElement.insertAdjacentHTML("beforeend", markup);
   }
-}
-function _classPrivateFieldGet(receiver, privateMap) {
-  var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get");
-  return _classApplyDescriptorGet(receiver, descriptor);
-}
-function _classExtractFieldDescriptor(receiver, privateMap, action) {
-  if (!privateMap.has(receiver)) {
-    throw new TypeError("attempted to " + action + " private field on non-instance");
-  }
-  return privateMap.get(receiver);
-}
-function _classApplyDescriptorGet(receiver, descriptor) {
-  if (descriptor.get) {
-    return descriptor.get.call(receiver);
-  }
-  return descriptor.value;
-}
-var _parentElement = /*#__PURE__*/new WeakMap();
-var _tableContent = /*#__PURE__*/new WeakMap();
-class ConversionratesView {
-  constructor() {
-    _parentElement.set(this, {
-      writable: true,
-      value: document.querySelector("#currency-rates-table tbody")
-    });
-    _tableContent.set(this, {
-      writable: true,
-      value: void 0
-    });
-  }
-  render() {
-    this.clear();
-  }
-  clear() {
-    _classPrivateFieldGet(this, _parentElement).innerHTML = "";
-  }
-  renderTableData(amount, tableData) {
-    this.clear();
-    _classPrivateFieldSet(this, _tableContent, tableData.map(item => {
+  renderResults(amount, tableData) {
+    this.renderStatic();
+    this.tableContent = tableData.map(item => {
       // prettier-ignore
       return `<tr class="tr">
                         <td class="td clr-green-200">${item.baseValue}</td>
                         <td class="td">${item.ratio}</td>
                         <td class="td text-align-right">${_helpersJs.amountRatioMultiplier(amount, item.ratio)}</td>
                     </tr>`;
-    }).join(""));
-    _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML("afterbegin", _classPrivateFieldGet(this, _tableContent));
+    }).join("");
+    const markup = `
+		<form class="form pad-l-2 pad-r-2" method="get">
+			<div class="mar-b-4 input-field-container">
+				<label for="amount" class="label mar-b-1">Current amount</label>
+				<div class="base-currency-holder">
+					<span class="base-currency">USD</span>
+				</div>
+				<input
+					type="number"
+					min="0"
+					class="form-control input-field numeric"
+					id="amount"
+					aria-describedby="null"
+					placeholder="500.50"
+				/>
+			</div>
+		</form>
+
+		<div class="table-container pad-l-2 pad-r-2">
+			<table id="currency-rates-table" class="table table-borderless">
+				<thead>
+					<tr class="tr">
+						<th style="width: 25%" class="th label" scope="col">Base</th>
+						<th style="width: 25%" class="th label" scope="col">Ratio</th>
+						<th style="width: 50%" class="th label text-align-right" scope="col">Amount</th>
+					</tr>
+				</thead>
+				<tbody>${this.tableContent}</tbody>
+			</table>
+		</div>
+		`;
+    this.mainElement.insertAdjacentHTML("beforeend", markup);
+    document.getElementById("amount").value = amount;
+  }
+  renderConversionRates() {
+    window.addEventListener("DOMContentLoaded", event => {
+      const renderA = document.getElementById("renderA");
+      // ** View change event
+      renderA.addEventListener("click", async function (event) {
+        ConversionRatesView.renderResults(model.simulatedAmount, model.simulatedResponse);
+      });
+    });
   }
 }
 exports.default = new ConversionratesView();
 
-},{"../helpers.js":"581KF","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"581KF":[function(require,module,exports) {
+},{"./View.js":"48jhP","../helpers.js":"581KF","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"48jhP":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "View", function () {
+  return View;
+});
+function _defineProperty(obj, key, value) {
+  if ((key in obj)) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+class View {
+  constructor() {
+    _defineProperty(this, "mainElement", document.getElementById("main"));
+    _defineProperty(this, "hrefIDs", ["conversion-rates", "a-to-b-conversion"]);
+  }
+  clear() {
+    this.mainElement.innerHTML = "";
+  }
+  renderStatic() {
+    this.clear();
+    this.renderTabbedButtons();
+    this.tabbedButtonEvent();
+  }
+  renderNavbar() {
+    const markup = `
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="nav-brand"></div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Github</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">LinkedIn</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        `;
+    document.body.insertAdjacentHTML("afterbegin", markup);
+  }
+  renderTabbedButtons() {
+    const markup = `
+        <div class="button-group pad-l-2 pad-r-2 mar-t-3 mar-b-5">
+            <a id="conversion-rates" href="#" class="button button-primary button-md tab-button active">Conversion Rates</a>
+            <a id="a-to-b-conversion" href="#" class="button button-primary button-md tab-button">A to B Conversion</a>
+        </div>
+        `;
+    this.mainElement.insertAdjacentHTML("beforeend", markup);
+  }
+  tabbedButtonEvent() {
+    const tabButton = document.querySelectorAll(".tab-button");
+    tabButton.forEach(tButton => tButton.addEventListener("click", async function (e) {
+      tabButton.forEach(tBtn => tBtn.classList.remove("active"));
+      this.classList.toggle("active");
+    }));
+  }
+}
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"581KF":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 _parcelHelpers.export(exports, "amountRatioMultiplier", function () {
@@ -613,6 +746,46 @@ _parcelHelpers.export(exports, "amountRatioMultiplier", function () {
 });
 const amountRatioMultiplier = (amount, ratio) => amount * ratio;
 
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["7BONy","3miIZ"], "3miIZ", "parcelRequirea32b")
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5U5Dr":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _ViewJs = require("./View.js");
+class StaticView extends _ViewJs.View {
+  renderStatic() {
+    this.clear();
+    this.renderNavbar();
+    this.renderTabbedButtons();
+  }
+  renderNavbar() {
+    const markup = `
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="nav-brand"></div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Github</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">LinkedIn</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        `;
+    document.body.insertAdjacentHTML("afterbegin", markup);
+  }
+  renderTabbedButtons() {
+    const markup = `
+        <div class="button-group pad-l-2 pad-r-2 mar-t-3 mar-b-5">
+            <a id="conversionRates" href="#" class="button button-primary button-md tab-button active">Conversion Rates</a>
+            <a id="aToBConversion" href="#" class="button button-primary button-md tab-button">A to B Conversion</a>
+        </div>
+        `;
+    this.mainElement.insertAdjacentHTML("beforeend", markup);
+  }
+}
+exports.default = new StaticView();
+
+},{"./View.js":"48jhP","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["7BONy","3miIZ"], "3miIZ", "parcelRequirea32b")
 
 //# sourceMappingURL=index.250b04c7.js.map

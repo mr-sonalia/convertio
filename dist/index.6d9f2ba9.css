@@ -8,9 +8,25 @@
 body {
   font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   background-color: white;
+  overflow: hidden;
 }
 ::selection {
   background-color: rgba(104, 178, 97, 0.3);
+}
+::-webkit-scrollbar {
+  width: 1vw;
+  min-width: 2px;
+  max-width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: white;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(20, 20, 20, 0.15);
+}
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+  background: rgba(20, 20, 20, 0.3);
 }
 .h1,
 .h2,
@@ -371,6 +387,23 @@ a.button-primary {
   color: #68b261;
   outline: 1px dashed #68b261;
   outline-offset: 3px;
+}
+.table-container {
+  overflow: auto;
+  width: 100%;
+  height: 50vh;
+  margin-bottom: 1rem;
+}
+.table-container thead {
+  padding: 0rem 0rem 0.6rem;
+}
+.table-container thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.table-container th {
+  background: white;
 }
 .input-field {
   border: 1px solid #141414;

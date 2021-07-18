@@ -1,5 +1,13 @@
+<!-- * Responsive Markup -->
+<div class="col-0 col-sm-2 col-md-3 col-lg-3 col-xl-4"></div>
+<div class="col-12 col-sm-8 col-md-6 col-lg-6 col-xl-4"></div>
+<div class="col-0 col-sm-2 col-md-3 col-lg-3 col-xl-4"></div>
+<!-- * Responsive Markup End-->
+
+<!-- !----------------------------------------------------! -->
+
 <!-- * Nav Markup -->
-<!-- <nav class="navbar">
+<nav class="navbar">
 	<div class="container-fluid">
 		<div class="nav-brand"></div>
 		<ul class="navbar-nav">
@@ -11,31 +19,105 @@
 			</li>
 		</ul>
 	</div>
-</nav> -->
+</nav>
 <!-- * Nav Markup End-->
 
+<!-- !----------------------------------------------------! -->
+
 <!-- * Table Markup -->
-<!-- 
-<div class="row">
-    <div class="col-sm-0 col-md-4"></div>
-    <div class="col-sm-12 col-md-4">
-        <table id="currency-rates-table" class="table table-borderless">
-            <thead>
-                <tr class="tr">
-                    <th style="width: 25%" class="th label" scope="col">Base</th>
-                    <th style="width: 25%" class="th label" scope="col">Ratio</th>
-                    <th style="width: 50%" class="th label text-align-right" scope="col">Amount</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-    <div class="col-sm-0 col-md-4"></div>
-</div> -->
+<table id="currency-rates-table" class="table table-borderless">
+	<thead>
+		<tr class="tr">
+			<th style="width: 25%" class="th label" scope="col">Base</th>
+			<th style="width: 25%" class="th label" scope="col">Ratio</th>
+			<th style="width: 50%" class="th label text-align-right" scope="col">Amount</th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+</table>
 <!-- * Table Markup End -->
 
-<!-- * Responsive Markup -->
-<!-- <div class="col-0 col-sm-2 col-md-3 col-lg-3 col-xl-4"></div>
-<div class="col-12 col-sm-8 col-md-6 col-lg-6 col-xl-4"></div>
-<div class="col-0 col-sm-2 col-md-3 col-lg-3 col-xl-4"></div> -->
-<!-- * Responsive Markup End-->
+<!-- !----------------------------------------------------! -->
+
+<!-- * Button Group Markup -->
+<div class="button-group pad-l-2 pad-r-2 mar-t-3 mar-b-8">
+	<a id="conversionRates" href="#" class="button button-primary button-md tab-button active">Conversion Rates</a>
+	<a id="aToBConversion" href="#" class="button button-primary button-md tab-button">A to B Conversion</a>
+</div>
+<!-- * Button Group Markup End-->
+
+<!-- !----------------------------------------------------! -->
+
+<!-- * Form: Conversion Rates Markup  -->
+<form class="form pad-l-2 pad-r-2" method="get">
+	<div class="mar-b-3 input-field-container">
+		<label for="base-currency" class="label mar-b-1">Select base currency</label>
+		<input class="form-control input-field" list="base-currencies" name="base-currency" id="base-currency" placeholder="Select any one" />
+		<datalist id="base-currencies">
+			<option value="USD"></option>
+			<option value="INR"></option>
+			<option value="AUD"></option>
+			<option value="CNY"></option>
+			<option value="SCD"></option>
+		</datalist>
+	</div>
+	<div class="mar-b-6 input-field-container">
+		<label for="amount" class="label mar-b-1">Enter amount</label>
+		<div class="base-currency-holder">
+			<span class="base-currency">USD</span>
+		</div>
+		<input type="number" min="0" class="form-control input-field numeric" id="amount" aria-describedby="null" placeholder="500.50" />
+	</div>
+	<div class="mar-b-3 input-field-container">
+		<div class="button-group">
+			<a href="#" class="button button-primary button-lg">Show Conversion Rates</a>
+		</div>
+	</div>
+</form>
+<!-- * Form: Conversion Rates Markup End -->
+
+<!-- !----------------------------------------------------! -->
+
+<!-- * Form: A to B Conversion Markup -->
+<form class="form pad-l-2 pad-r-2" method="get">
+	<div class="row mar-b-3 input-field-container">
+		<div class="col-6">
+			<label for="base-currency" class="label mar-b-1">Current base</label>
+			<input class="form-control input-field" list="base-currencies" name="base-currency" id="base-currency" placeholder="USD" />
+			<datalist id="base-currencies">
+				<option value="INR"></option>
+				<option value="AUD"></option>
+				<option value="CNY"></option>
+				<option value="SCD"></option>
+			</datalist>
+		</div>
+		<div class="col-6">
+			<label for="base-currency" class="label mar-b-1">Converted base</label>
+			<input class="form-control input-field" list="base-currencies" name="base-currency" id="base-currency" placeholder="INR" />
+			<datalist id="base-currencies">
+				<option value="USD"></option>
+				<option value="AUD"></option>
+				<option value="CNY"></option>
+				<option value="SCD"></option>
+			</datalist>
+		</div>
+	</div>
+	<div class="mar-b-6 input-field-container">
+		<label for="amount" class="label mar-b-1">Enter amount</label>
+		<div class="base-currency-holder">
+			<span class="base-currency">USD</span>
+		</div>
+		<input type="number" min="0" class="form-control input-field numeric" id="amount" aria-describedby="null" placeholder="500.50" />
+	</div>
+	<div class="mar-b-3 input-field-container">
+		<div class="button-group">
+			<a href="#" class="button button-primary button-lg">Convert Amount</a>
+		</div>
+	</div>
+</form>
+<!-- * Form: A to B Conversion Markup End -->
+
+<!-- !----------------------------------------------------! -->
+
+<!-- * Result: Conversion Rates Markup -->
+<!-- * Result: Conversion Rates Markup End -->

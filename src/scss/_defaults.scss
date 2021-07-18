@@ -32,11 +32,31 @@ $clr-green-50: rgba(104, 178, 97, 0.3);
 body {
 	font-family: $font-family;
 	background-color: $clr-white-100;
+	overflow: hidden;
 }
 
 ::selection {
 	background-color: $clr-green-100;
 }
+
+::-webkit-scrollbar {
+	width: 1vw;
+	min-width: 2px;
+	max-width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: $clr-white-100;
+}
+
+::-webkit-scrollbar-thumb {
+	background: $clr-black-50;
+	&:hover {
+		cursor: pointer;
+		background: $clr-black-100;
+	}
+}
+
 //
 .h1,
 .h2,
