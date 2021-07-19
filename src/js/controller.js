@@ -8,27 +8,29 @@ import StaticView from "./views/StaticView.js";
 // * VARIABLES
 
 // * FUNCTIONS
-const controlDataflow = () => {
-	// StaticView.renderStatic();
-	ConversionRatesView.renderNavbar();
-	ConversionRatesView.renderInputForm();
-	// ConversionRatesView.renderConversionRates();
-	// ConversionRatesView.renderResults(model.simulatedAmount, model.simulatedResponse);
-	// ConversionRatesView.renderConversionRates();
-};
+const controlConversionRates = async () => {
+	try {
+		const query = ConversionRatesView.getQuery();
+		const amount = ConversionRatesView.getAmount();
+		if (!query) return;
+		await model.loadConversionRates(query, amount);
 
+		// prettier-ignore
+		ConversionRatesView.renderResults(
+			model.state.search.query,
+			model.state.search.amount, 
+			model.state.result);
+	} catch (error) {}
+};
+const controlAtoBConverion = async () => {};
 // * INIT
 const init = function () {
-	controlDataflow();
+	StaticView.renderStatic();
+	ConversionRatesView.renderInputForm();
+	ConversionRatesView.addSearchHandler(controlConversionRates);
+
+	// ConversionRatesView.getQuery();
+
+	// ConversionRatesView.addSearchHandler(controlConversionRates);
 };
 init();
-
-// * EVENT LISTENERS
-window.addEventListener("DOMContentLoaded", (event) => {
-	const renderA = document.getElementById("renderA");
-
-	// ** View change event
-	renderA.addEventListener("click", async function (event) {
-		ConversionRatesView.renderResults(model.simulatedAmount, model.simulatedResponse);
-	});
-});

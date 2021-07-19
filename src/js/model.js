@@ -1,76 +1,40 @@
-export const simulatedResponse = [
-	{
-		baseValue: "INR",
-		ratio: "72.4570",
+import { API_URL, API_KEY } from "./config.js";
+import { AJAX } from "./helpers.js";
+export const state = {
+	search: {
+		query: ``,
+		amount: null,
+		rates: [],
 	},
-	{
-		baseValue: "CND",
-		ratio: "1.2580",
-	},
-	{
-		baseValue: "CNY",
-		ratio: "2.8585",
-	},
-	{
-		baseValue: "DNR",
-		ratio: "0.5528",
-	},
-	{
-		baseValue: "BLV",
-		ratio: "720",
-	},
-	{
-		baseValue: "MDN",
-		ratio: "11.3431",
-	},
-	{
-		baseValue: "DKE",
-		ratio: "7",
-	},
-	{
-		baseValue: "PPX",
-		ratio: "201",
-	},
-	{
-		baseValue: "AXC",
-		ratio: "20.1",
-	},
-	{
-		baseValue: "INR",
-		ratio: "72.4570",
-	},
-	{
-		baseValue: "CND",
-		ratio: "1.2580",
-	},
-	{
-		baseValue: "CNY",
-		ratio: "2.8585",
-	},
-	{
-		baseValue: "DNR",
-		ratio: "0.5528",
-	},
-	{
-		baseValue: "BLV",
-		ratio: "720",
-	},
-	{
-		baseValue: "MDN",
-		ratio: "11.3431",
-	},
-	{
-		baseValue: "DKE",
-		ratio: "7",
-	},
-	{
-		baseValue: "PPX",
-		ratio: "201",
-	},
-	{
-		baseValue: "AXC",
-		ratio: "20.1",
-	},
-];
+	result: [],
+};
 
-export const simulatedAmount = 500;
+const createConversionRateObject = (data) => {
+	const { result } = data;
+	return {
+		baseCode: result.base_code,
+		conversionRates: result.conversion_rates,
+	};
+};
+
+export const loadConversionRates = async (query, amount) => {
+	state.search.query = query;
+	state.search.amount = amount;
+	try {
+		const data = await AJAX(`${API_URL}/${API_KEY}/latest/${query}`);
+
+		// state.search.baseCode = data.base_code;
+		state.search.rates = Object.entries(data.conversion_rates);
+
+		state.result = state.search.rates.map((rate) => {
+			return {
+				baseCode: rate[0],
+				ratio: rate[1],
+				finalAmount: +(rate[1] * amount).toFixed(3),
+			};
+		});
+		console.table(state.result);
+	} catch (e) {
+		throw e;
+	}
+};

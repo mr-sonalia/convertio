@@ -447,93 +447,94 @@ var _modelJs = require("./model.js");
 var _viewsConversionRatesViewJs = require("./views/ConversionRatesView.js");
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 var _viewsConversionRatesViewJsDefault = _parcelHelpers.interopDefault(_viewsConversionRatesViewJs);
-require("./views/StaticView.js");
+var _viewsStaticViewJs = require("./views/StaticView.js");
+var _viewsStaticViewJsDefault = _parcelHelpers.interopDefault(_viewsStaticViewJs);
 // * VARIABLES
 // * FUNCTIONS
-const controlDataflow = () => {
-  // StaticView.renderStatic();
-  _viewsConversionRatesViewJsDefault.default.renderNavbar();
-  _viewsConversionRatesViewJsDefault.default.renderInputForm();
+const controlConversionRates = async () => {
+  try {
+    const query = _viewsConversionRatesViewJsDefault.default.getQuery();
+    const amount = _viewsConversionRatesViewJsDefault.default.getAmount();
+    if (!query) return;
+    await _modelJs.loadConversionRates(query, amount);
+    // prettier-ignore
+    _viewsConversionRatesViewJsDefault.default.renderResults(_modelJs.state.search.query, _modelJs.state.search.amount, _modelJs.state.result);
+  } catch (error) {}
 };
+const controlAtoBConverion = async () => {};
 // * INIT
 const init = function () {
-  controlDataflow();
+  _viewsStaticViewJsDefault.default.renderStatic();
+  _viewsConversionRatesViewJsDefault.default.renderInputForm();
+  _viewsConversionRatesViewJsDefault.default.addSearchHandler(controlConversionRates);
 };
 init();
-// * EVENT LISTENERS
-window.addEventListener("DOMContentLoaded", event => {
-  const renderA = document.getElementById("renderA");
-  // ** View change event
-  renderA.addEventListener("click", async function (event) {
-    _viewsConversionRatesViewJsDefault.default.renderResults(_modelJs.simulatedAmount, _modelJs.simulatedResponse);
-  });
-});
 
 },{"./model.js":"1hp6y","./views/ConversionRatesView.js":"7kQv5","./views/StaticView.js":"5U5Dr","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1hp6y":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "simulatedResponse", function () {
-  return simulatedResponse;
+_parcelHelpers.export(exports, "state", function () {
+  return state;
 });
-_parcelHelpers.export(exports, "simulatedAmount", function () {
-  return simulatedAmount;
+_parcelHelpers.export(exports, "loadConversionRates", function () {
+  return loadConversionRates;
 });
-const simulatedResponse = [{
-  baseValue: "INR",
-  ratio: "72.4570"
-}, {
-  baseValue: "CND",
-  ratio: "1.2580"
-}, {
-  baseValue: "CNY",
-  ratio: "2.8585"
-}, {
-  baseValue: "DNR",
-  ratio: "0.5528"
-}, {
-  baseValue: "BLV",
-  ratio: "720"
-}, {
-  baseValue: "MDN",
-  ratio: "11.3431"
-}, {
-  baseValue: "DKE",
-  ratio: "7"
-}, {
-  baseValue: "PPX",
-  ratio: "201"
-}, {
-  baseValue: "AXC",
-  ratio: "20.1"
-}, {
-  baseValue: "INR",
-  ratio: "72.4570"
-}, {
-  baseValue: "CND",
-  ratio: "1.2580"
-}, {
-  baseValue: "CNY",
-  ratio: "2.8585"
-}, {
-  baseValue: "DNR",
-  ratio: "0.5528"
-}, {
-  baseValue: "BLV",
-  ratio: "720"
-}, {
-  baseValue: "MDN",
-  ratio: "11.3431"
-}, {
-  baseValue: "DKE",
-  ratio: "7"
-}, {
-  baseValue: "PPX",
-  ratio: "201"
-}, {
-  baseValue: "AXC",
-  ratio: "20.1"
-}];
-const simulatedAmount = 500;
+var _configJs = require("./config.js");
+var _helpersJs = require("./helpers.js");
+const state = {
+  search: {
+    query: ``,
+    amount: null,
+    rates: []
+  },
+  result: []
+};
+const createConversionRateObject = data => {
+  const {result} = data;
+  return {
+    baseCode: result.base_code,
+    conversionRates: result.conversion_rates
+  };
+};
+const loadConversionRates = async (query, amount) => {
+  state.search.query = query;
+  state.search.amount = amount;
+  try {
+    const data = await _helpersJs.AJAX(`${_configJs.API_URL}/${_configJs.API_KEY}/latest/${query}`);
+    // state.search.baseCode = data.base_code;
+    state.search.rates = Object.entries(data.conversion_rates);
+    state.result = state.search.rates.map(rate => {
+      return {
+        baseCode: rate[0],
+        ratio: rate[1],
+        finalAmount: +(rate[1] * amount).toFixed(3)
+      };
+    });
+    console.table(state.result);
+  } catch (e) {
+    throw e;
+  }
+};
+
+},{"./config.js":"6pr2F","./helpers.js":"581KF","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"6pr2F":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "API_KEY", function () {
+  return API_KEY;
+});
+_parcelHelpers.export(exports, "API_URL", function () {
+  return API_URL;
+});
+_parcelHelpers.export(exports, "TIMEOUT_SEC", function () {
+  return TIMEOUT_SEC;
+});
+_parcelHelpers.export(exports, "SUPPORTED_COUNTRY_CODES", function () {
+  return SUPPORTED_COUNTRY_CODES;
+});
+const API_KEY = `41e59bf56bb30803a5891775`;
+const API_URL = `https://v6.exchangerate-api.com/v6/`;
+const TIMEOUT_SEC = 10;
+const SUPPORTED_COUNTRY_CODES = ["AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL", "BSD", "BTN", "BWP", "BYN", "BZD", "CAD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "FOK", "GBP", "GEL", "GGP", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "IMP", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KGS", "KHR", "KID", "KMF", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR", "MWK", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP", "STN", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TVD", "TWD", "TZS", "UAH", "UGX", "USD", "UYU", "UZS", "VES", "VND", "VUV", "WST", "XAF", "XCD", "XDR", "XOF", "XPF", "YER", "ZAR", "ZMW"];
 
 },{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5gA8y":[function(require,module,exports) {
 "use strict";
@@ -577,51 +578,102 @@ exports.export = function (dest, destName, get) {
     get: get
   });
 };
-},{}],"7kQv5":[function(require,module,exports) {
+},{}],"581KF":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "amountRatioMultiplier", function () {
+  return amountRatioMultiplier;
+});
+_parcelHelpers.export(exports, "AJAX", function () {
+  return AJAX;
+});
+var _config = require("./config");
+const amountRatioMultiplier = (amount, ratio) => amount * ratio;
+const timeout = function (s) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error(`Request took too long! Timeout after ${s} second`));
+    }, s * 1000);
+  });
+};
+const AJAX = async url => {
+  try {
+    const response = await Promise.race([fetch(url), timeout(_config.TIMEOUT_SEC)]);
+    const data = await response.json();
+    if (!response.ok) throw new Error("Could not find what you were looking for 🙁");
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+},{"./config":"6pr2F","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"7kQv5":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 var _ViewJs = require("./View.js");
-var _helpersJs = require("../helpers.js");
+require("../helpers.js");
+function _defineProperty(obj, key, value) {
+  if ((key in obj)) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
 class ConversionratesView extends _ViewJs.View {
+  constructor(...args) {
+    super(...args);
+    _defineProperty(this, "formElement", document.querySelector(".form"));
+    _defineProperty(this, "result", {
+      amount: null,
+      tableData: ""
+    });
+  }
   renderInputForm() {
-    this.renderStatic();
+    // this.renderStatic();
     const markup = `
 		<form class="form pad-l-2 pad-r-2" method="get">
 			<div class="mar-b-3 input-field-container">
 				<label for="base-currency" class="label mar-b-1">Select base currency</label>
-				<input class="form-control input-field" list="base-currencies" name="base-currency" id="base-currency" placeholder="Select any one" />
+				<input class="form-control input-field" list="base-currencies" name="base-currency" id="base-currency" placeholder="Select any one" required/>
 				<datalist id="base-currencies">
-					<option value="USD"></option>
-					<option value="INR"></option>
-					<option value="AUD"></option>
-					<option value="CNY"></option>
-					<option value="SCD"></option>
+				${this.renderSupportedCounties()}
 				</datalist>
 			</div>
 			<div class="mar-b-6 input-field-container">
 				<label for="amount" class="label mar-b-1">Enter amount</label>
 				<div class="base-currency-holder">
-					<span class="base-currency">USD</span>
+					<span class="base-currency">AMT</span>
 				</div>
-				<input type="number" min="0" class="form-control input-field numeric" id="amount" aria-describedby="null" placeholder="500.50" />
+				<input type="number" min="0" class="form-control input-field numeric" id="amount" aria-describedby="null" placeholder="500.50" required />
 			</div>
 			<div class="mar-b-3 input-field-container">
 				<div class="button-group">
-					<a id="renderA" href="#" class="button button-primary button-lg">Show Conversion Rates</a>
+					<button type="submit" id="conversionRates" href="#" class="button button-primary button-lg return-results-button">Show Conversion Rates</button>
 				</div>
 			</div>
 		</form>
 		`;
     this.mainElement.insertAdjacentHTML("beforeend", markup);
   }
-  renderResults(amount, tableData) {
-    this.renderStatic();
+  renderResults(baseCode, amount, tableData) {
+    this.render();
+    this.result = {
+      amount,
+      tableData
+    };
     this.tableContent = tableData.map(item => {
       // prettier-ignore
+      if (baseCode == item.baseCode) return '';
       return `<tr class="tr">
-                        <td class="td clr-green-200">${item.baseValue}</td>
+                        <td class="td clr-green-200">${item.baseCode}</td>
                         <td class="td">${item.ratio}</td>
-                        <td class="td text-align-right">${_helpersJs.amountRatioMultiplier(amount, item.ratio)}</td>
+                        <td class="td text-align-right">${new Intl.NumberFormat("en-IN").format(item.finalAmount)}</td>
                     </tr>`;
     }).join("");
     const markup = `
@@ -629,7 +681,7 @@ class ConversionratesView extends _ViewJs.View {
 			<div class="mar-b-4 input-field-container">
 				<label for="amount" class="label mar-b-1">Current amount</label>
 				<div class="base-currency-holder">
-					<span class="base-currency">USD</span>
+					<span class="base-currency">${baseCode}</span>
 				</div>
 				<input
 					type="number"
@@ -658,17 +710,21 @@ class ConversionratesView extends _ViewJs.View {
     this.mainElement.insertAdjacentHTML("beforeend", markup);
     document.getElementById("amount").value = amount;
   }
-  renderConversionRates() {
-    window.addEventListener("DOMContentLoaded", event => {
-      const renderA = document.getElementById("renderA");
-      // ** View change event
-      renderA.addEventListener("click", async function (event) {
-        ConversionRatesView.renderResults(model.simulatedAmount, model.simulatedResponse);
-      });
+  getQuery() {
+    return document.querySelector("#base-currency").value;
+  }
+  getAmount() {
+    return document.getElementById("amount").value;
+  }
+  addSearchHandler(handler) {
+    document.querySelector(".form").addEventListener("submit", e => {
+      e.preventDefault();
+      handler();
     });
   }
 }
 exports.default = new ConversionratesView();
+let formatter = Intl.NumberFormat("en-US");
 
 },{"./View.js":"48jhP","../helpers.js":"581KF","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"48jhP":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
@@ -676,6 +732,7 @@ _parcelHelpers.defineInteropFlag(exports);
 _parcelHelpers.export(exports, "View", function () {
   return View;
 });
+var _configJs = require("../config.js");
 function _defineProperty(obj, key, value) {
   if ((key in obj)) {
     Object.defineProperty(obj, key, {
@@ -692,69 +749,53 @@ function _defineProperty(obj, key, value) {
 class View {
   constructor() {
     _defineProperty(this, "mainElement", document.getElementById("main"));
-    _defineProperty(this, "hrefIDs", ["conversion-rates", "a-to-b-conversion"]);
   }
   clear() {
     this.mainElement.innerHTML = "";
   }
-  renderStatic() {
+  render() {
     this.clear();
     this.renderTabbedButtons();
-    this.tabbedButtonEvent();
+    this.addTabbedButtonEvent();
   }
-  renderNavbar() {
-    const markup = `
-        <nav class="navbar">
-            <div class="container-fluid">
-                <div class="nav-brand"></div>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a href="" class="nav-link">Github</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="" class="nav-link">LinkedIn</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        `;
-    document.body.insertAdjacentHTML("afterbegin", markup);
+  renderError() {
+    console.log("Error");
   }
   renderTabbedButtons() {
     const markup = `
         <div class="button-group pad-l-2 pad-r-2 mar-t-3 mar-b-5">
-            <a id="conversion-rates" href="#" class="button button-primary button-md tab-button active">Conversion Rates</a>
-            <a id="a-to-b-conversion" href="#" class="button button-primary button-md tab-button">A to B Conversion</a>
+            <button id="conversion-rates" href="#" class="button button-primary button-md tab-button active">Conversion Rates</button>
+            <button id="a-to-b-conversion" href="#" class="button button-primary button-md tab-button">A to B Conversion</button>
         </div>
         `;
     this.mainElement.insertAdjacentHTML("beforeend", markup);
   }
-  tabbedButtonEvent() {
+  addTabbedButtonEvent() {
     const tabButton = document.querySelectorAll(".tab-button");
     tabButton.forEach(tButton => tButton.addEventListener("click", async function (e) {
       tabButton.forEach(tBtn => tBtn.classList.remove("active"));
       this.classList.toggle("active");
     }));
   }
+  renderSupportedCounties() {
+    return _configJs.SUPPORTED_COUNTRY_CODES.map(code => `<option>${code}</option>`).join("");
+  }
 }
 
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"581KF":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "amountRatioMultiplier", function () {
-  return amountRatioMultiplier;
-});
-const amountRatioMultiplier = (amount, ratio) => amount * ratio;
-
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5U5Dr":[function(require,module,exports) {
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y","../config.js":"6pr2F"}],"5U5Dr":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 var _ViewJs = require("./View.js");
 class StaticView extends _ViewJs.View {
+  // returnResults() {
+  // ["load"].forEach((Event) => {
+  // window.addEventListener(Event);
+  // });
+  // }
   renderStatic() {
     this.clear();
     this.renderNavbar();
-    this.renderTabbedButtons();
+    this.render();
   }
   renderNavbar() {
     const markup = `
@@ -773,15 +814,6 @@ class StaticView extends _ViewJs.View {
         </nav>
         `;
     document.body.insertAdjacentHTML("afterbegin", markup);
-  }
-  renderTabbedButtons() {
-    const markup = `
-        <div class="button-group pad-l-2 pad-r-2 mar-t-3 mar-b-5">
-            <a id="conversionRates" href="#" class="button button-primary button-md tab-button active">Conversion Rates</a>
-            <a id="aToBConversion" href="#" class="button button-primary button-md tab-button">A to B Conversion</a>
-        </div>
-        `;
-    this.mainElement.insertAdjacentHTML("beforeend", markup);
   }
 }
 exports.default = new StaticView();

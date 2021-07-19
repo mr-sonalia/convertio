@@ -32,7 +32,6 @@ $clr-green-50: rgba(104, 178, 97, 0.3);
 body {
 	font-family: $font-family;
 	background-color: $clr-white-100;
-	overflow: hidden;
 }
 
 ::selection {
@@ -50,10 +49,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-	background: $clr-black-50;
+	border-radius: 2rem;
+	background: $clr-green-100;
+	transition: all 0.1s ease-out;
 	&:hover {
-		cursor: pointer;
-		background: $clr-black-100;
+		background: $clr-green-200;
 	}
 }
 
@@ -102,7 +102,7 @@ a.nav-link {
 	font-weight: $fw-medium;
 }
 
-a.button {
+.button {
 	font-size: 1.4rem;
 	font-weight: $fw-medium;
 
@@ -130,7 +130,7 @@ a.button {
 	.input-field {
 		font-size: 1.6rem;
 	}
-	a.button {
+	.button {
 		font-size: 1.2rem;
 	}
 	a.nav-link {
