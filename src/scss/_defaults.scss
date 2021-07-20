@@ -29,11 +29,8 @@ $clr-green-50: rgba(17, 63, 13, 0.15);
 	box-sizing: border-box;
 	font-size: 62.5%;
 }
-html {
-	height: 100%;
-}
+
 body {
-	min-height: 100%;
 	position: relative;
 	font-family: $font-family;
 	background-color: $clr-white-100;
