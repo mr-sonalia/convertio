@@ -162,4 +162,4 @@ export const SUPPORTED_COUNTRY_CODES = [
 	"YER",
 	"ZAR",
 	"ZMW",
-];
+].map((code) => code.toLowerCase());

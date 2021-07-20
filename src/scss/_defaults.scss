@@ -19,7 +19,7 @@ $clr-green-200: rgba(104, 178, 97, 1);
 
 // * For shaodws
 $clr-black-50: rgba(20, 20, 20, 0.15);
-$clr-green-50: rgba(104, 178, 97, 0.3);
+$clr-green-50: rgba(17, 63, 13, 0.15);
 
 //  * Default Configuration
 
@@ -102,6 +102,12 @@ a.nav-link {
 	font-weight: $fw-medium;
 }
 
+.nav-brand {
+	pointer-events: none;
+	font-size: 2rem;
+	font-weight: $fw-bold;
+}
+
 .button {
 	font-size: 1.4rem;
 	font-weight: $fw-medium;
@@ -117,7 +123,7 @@ a.nav-link {
 }
 .label {
 	font-size: 1.2rem;
-	font-weight: $fw-regular;
+	font-weight: $fw-medium;
 }
 
 @media screen and(max-width: 360px) {
@@ -135,5 +141,8 @@ a.nav-link {
 	}
 	a.nav-link {
 		font-size: 1.2rem;
+	}
+	.nav-brand {
+		font-weight: 1.8rem;
 	}
 }

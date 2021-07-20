@@ -23,3 +23,8 @@ export const AJAX = async (url) => {
 		throw error;
 	}
 };
+
+export const numberFormatter = (value) => {
+	return new Intl.NumberFormat("en-IN").format(value);
+	// console.log(value);
+};

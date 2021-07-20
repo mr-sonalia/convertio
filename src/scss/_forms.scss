@@ -16,6 +16,9 @@
 	&.numeric {
 		padding-left: 6.4rem;
 	}
+	&:disabled {
+		background-color: $clr-gray-100;
+	}
 }
 
 .base-currency-holder {

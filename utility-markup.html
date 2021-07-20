@@ -52,7 +52,14 @@
 <form class="form pad-l-2 pad-r-2" method="get">
 	<div class="mar-b-3 input-field-container">
 		<label for="base-currency" class="label mar-b-1">Select base currency</label>
-		<input class="form-control input-field" list="base-currencies" name="base-currency" id="base-currency" placeholder="Select any one" />
+		<input
+			class="form-control input-field"
+			list="base-currencies"
+			name="base-currency"
+			id="base-currency"
+			placeholder="Select any one"
+			required
+		/>
 		<datalist id="base-currencies">
 			<option value="USD"></option>
 			<option value="INR"></option>
@@ -66,11 +73,11 @@
 		<div class="base-currency-holder">
 			<span class="base-currency">USD</span>
 		</div>
-		<input type="number" min="0" class="form-control input-field numeric" id="amount" aria-describedby="null" placeholder="500.50" />
+		<input type="number" min="0" class="form-control input-field numeric" id="amount" aria-describedby="null" placeholder="500.50" required />
 	</div>
 	<div class="mar-b-3 input-field-container">
 		<div class="button-group">
-			<a type="submit" href="#" class="button button-primary button-lg">Show Conversion Rates</a>
+			<button type="submit" href="#" class="button button-primary button-lg">Show Conversion Rates</button>
 		</div>
 	</div>
 </form>
@@ -83,23 +90,13 @@
 	<div class="row mar-b-3 input-field-container">
 		<div class="col-6">
 			<label for="base-currency" class="label mar-b-1">Current base</label>
-			<input class="form-control input-field" list="base-currencies" name="base-currency" id="base-currency" placeholder="USD" />
-			<datalist id="base-currencies">
-				<option value="INR"></option>
-				<option value="AUD"></option>
-				<option value="CNY"></option>
-				<option value="SCD"></option>
-			</datalist>
+			<input class="form-control input-field" list="base-currencies" name="base-currency" id="base-currency" placeholder="USD" required />
+			<datalist id="base-currencies"> </datalist>
 		</div>
 		<div class="col-6">
 			<label for="base-currency" class="label mar-b-1">Converted base</label>
-			<input class="form-control input-field" list="base-currencies" name="base-currency" id="base-currency" placeholder="INR" />
-			<datalist id="base-currencies">
-				<option value="USD"></option>
-				<option value="AUD"></option>
-				<option value="CNY"></option>
-				<option value="SCD"></option>
-			</datalist>
+			<input class="form-control input-field" list="base-currencies" name="base-currency" id="base-currency" placeholder="INR" required />
+			<datalist id="base-currencies"> </datalist>
 		</div>
 	</div>
 	<div class="mar-b-6 input-field-container">

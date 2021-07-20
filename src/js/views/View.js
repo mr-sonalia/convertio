@@ -2,37 +2,64 @@ import { SUPPORTED_COUNTRY_CODES } from "../config.js";
 
 export class View {
 	mainElement = document.getElementById("main");
-
-	clear() {
+	tabButtons = null;
+	clearRender() {
 		this.mainElement.innerHTML = "";
 	}
-	render() {
-		this.clear();
-		this.renderTabbedButtons();
-		this.addTabbedButtonEvent();
-	}
-	renderError() {
-		console.log("Error");
-	}
-	renderTabbedButtons() {
+
+	renderNavbar() {
 		const markup = `
-        <div class="button-group pad-l-2 pad-r-2 mar-t-3 mar-b-5">
-            <button id="conversion-rates" href="#" class="button button-primary button-md tab-button active">Conversion Rates</button>
-            <button id="a-to-b-conversion" href="#" class="button button-primary button-md tab-button">A to B Conversion</button>
-        </div>
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="nav-brand pad-l-2">Convertio</div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Github</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">LinkedIn</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         `;
+
+		document.body.insertAdjacentHTML("afterbegin", markup);
+	}
+
+	renderInputForm(markup) {
+		this.clearRender();
 		this.mainElement.insertAdjacentHTML("beforeend", markup);
 	}
-	addTabbedButtonEvent() {
-		const tabButton = document.querySelectorAll(".tab-button");
-		tabButton.forEach((tButton) =>
-			tButton.addEventListener("click", async function (e) {
-				tabButton.forEach((tBtn) => tBtn.classList.remove("active"));
-				this.classList.toggle("active");
-			})
-		);
+
+	addSearchHandler(handler) {
+		this.renderInputForm(this.markup);
+		document.querySelector(".form").addEventListener("submit", (Event) => {
+			Event.preventDefault();
+			handler();
+		});
 	}
+
+	tabbedButtonStateEvent(handlerA, handlerB) {
+		console.log(handlerA);
+		handlerA();
+		this.tabButtons = document.querySelectorAll(".tab-button");
+		this.tabButtons.forEach((button) => {
+			button.addEventListener("click", (Event) => {
+				this.tabButtons.forEach((tBtn) => tBtn.classList.remove("active"));
+				button.classList.toggle("active");
+				if (button.id === "conversion-rates") handlerA();
+				else handlerB();
+			});
+		});
+	}
+
 	renderSupportedCounties() {
-		return SUPPORTED_COUNTRY_CODES.map((code) => `<option>${code}</option>`).join("");
+		return SUPPORTED_COUNTRY_CODES.map((code) => `<option>${code.toUpperCase()}</option>`).join("");
+	}
+
+	renderError(error) {
+		//  todo: Create error handling
+		console.error(error);
 	}
 }

@@ -3,6 +3,7 @@
 // * IMPORTS
 import * as model from "./model.js";
 import ConversionRatesView from "./views/ConversionRatesView.js";
+import PairConversionView from "./views/PairConversionView.js";
 import StaticView from "./views/StaticView.js";
 
 // * VARIABLES
@@ -17,20 +18,34 @@ const controlConversionRates = async () => {
 
 		// prettier-ignore
 		ConversionRatesView.renderResults(
-			model.state.search.query,
-			model.state.search.amount, 
+			query,
+			amount, 
 			model.state.result);
-	} catch (error) {}
+		//
+	} catch (error) {
+		ConversionRatesView.renderError(error);
+	}
 };
-const controlAtoBConverion = async () => {};
+const controlPairConverion = async () => {
+	try {
+		const [queryA, queryB] = PairConversionView.getQuery();
+		const amount = PairConversionView.getAmount();
+		if (!queryA || !queryB) return;
+
+		await model.loadPairConversionRates(`${queryA}/${queryB}`, amount);
+
+		PairConversionView.renderResults(...model.state.result);
+		//
+	} catch (error) {
+		PairConversionView.renderError(error);
+	}
+};
 // * INIT
 const init = function () {
 	StaticView.renderStatic();
-	ConversionRatesView.renderInputForm();
-	ConversionRatesView.addSearchHandler(controlConversionRates);
-
-	// ConversionRatesView.getQuery();
-
-	// ConversionRatesView.addSearchHandler(controlConversionRates);
+	StaticView.tabbedButtonStateEvent(
+		() => ConversionRatesView.addSearchHandler(controlConversionRates),
+		() => PairConversionView.addSearchHandler(controlPairConverion)
+	);
 };
 init();
