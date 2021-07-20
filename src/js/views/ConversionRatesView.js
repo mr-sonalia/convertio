@@ -22,8 +22,8 @@ class ConversionratesView extends View {
 			<div class="mar-b-3 input-field-container">
 				<div class="button-group">
 					<button type="submit" id="conversionRates" href="#" class="button button-primary button-lg return-results-button">Show Conversion Rates</button>
-					<h6 class="h6 pad-t-1 pad-l-1">Note: ROCs are updated daily</h6>
 				</div>
+				<h6 class="h6 pad-t-2 pad-l-1">Note: ROCs are updated daily</h6>
 			</div>
 		</form>
 		`;

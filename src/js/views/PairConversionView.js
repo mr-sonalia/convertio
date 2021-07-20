@@ -29,8 +29,8 @@ class PairConversionView extends View {
 			<div class="mar-b-3 input-field-container">
 				<div class="button-group">
 					<button type="submit" href="#" class="button button-primary button-lg">Convert Amount</button>
-					<h6 class="h6 pad-t-1 pad-l-1">Note: ROCs are updated daily</h6>
 				</div>
+				<h6 class="h6 pad-t-2 pad-l-1">Note: ROCs are updated daily</h6>
 			</div>
 	</form>
 		`;
