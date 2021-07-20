@@ -14,10 +14,10 @@ export class View {
                 <div class="nav-brand pad-l-2">Convertio</div>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="https://github.com/mr-sonalia" class="nav-link">Github</a>
+                        <a href="https://github.com/mr-sonalia" target="_blank" rel="noopener noreferrer" class="nav-link">Github</a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://www.linkedin.com/in/yash-sonalia/" class="nav-link">LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/yash-sonalia/" target="_blank" rel="noopener noreferrer" class="nav-link">LinkedIn</a>
                     </li>
                 </ul>
             </div>
