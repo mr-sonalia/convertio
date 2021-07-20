@@ -41,7 +41,6 @@ export class View {
 	}
 
 	tabbedButtonStateEvent(handlerA, handlerB) {
-		console.log(handlerA);
 		handlerA();
 		this.tabButtons = document.querySelectorAll(".tab-button");
 		this.tabButtons.forEach((button) => {
