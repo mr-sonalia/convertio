@@ -53,7 +53,7 @@ export const loadPairConversionRates = async (queries, amount) => {
 				baseCode,
 				targetCode,
 				ratio: numberFormatter(+ratio, 4),
-				currAmount: +amount,
+				currAmount: numberFormatter(+amount, 4),
 				finalAmount: amountRatioMultiplier(+amount, +ratio, 4),
 			},
 		];
