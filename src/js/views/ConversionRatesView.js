@@ -51,7 +51,7 @@ class ConversionratesView extends View {
 					<span class="base-currency">${baseCode}</span>
 				</div>
 				<input
-					type="number"
+					type="text"
 					min="0"
 					class="form-control input-field numeric"
 					id="amount"
