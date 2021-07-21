@@ -32,7 +32,6 @@ export const loadConversionRates = async (query, amount) => {
 				finalAmount: amountRatioMultiplier(+amount, +rate[1]),
 			};
 		});
-		console.table(typeof state.result.finalAmount);
 	} catch (error) {
 		throw error;
 	}

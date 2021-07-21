@@ -26,7 +26,7 @@ export const AJAX = async (url) => {
 };
 
 // prettier-ignore
-export const numberFormatter = (value, fraction) =>
+export const numberFormatter = (value, fraction = 4) =>
 	new Intl.NumberFormat("en-IN", 
 	{ 
 		minimumFractionDigits: fraction, 
