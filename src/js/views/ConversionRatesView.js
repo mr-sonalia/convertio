@@ -59,7 +59,7 @@ class ConversionratesView extends View {
 					placeholder="500.50"
 					step="any"
 					disabled
-					value ="${amount}"
+					value ="${numberFormatter(amount)}"
 				/>
 			</div>
 		</form>
