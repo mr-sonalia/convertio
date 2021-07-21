@@ -5,6 +5,7 @@ import * as model from "./model.js";
 import ConversionRatesView from "./views/ConversionRatesView.js";
 import PairConversionView from "./views/PairConversionView.js";
 import StaticView from "./views/StaticView.js";
+import { SUPPORTED_COUNTRY_CODES } from "./config.js";
 
 // * VARIABLES
 
@@ -42,8 +43,9 @@ const controlPairConverion = async () => {
 };
 // * INIT
 const init = function () {
-	StaticView.renderStatic();
-	StaticView.tabbedButtonStateEvent(
+	StaticView.autoRemoveLoader();
+
+	StaticView.homePageEventHandler(
 		() => ConversionRatesView.addSearchHandler(controlConversionRates),
 		() => PairConversionView.addSearchHandler(controlPairConverion)
 	);

@@ -1,5 +1,5 @@
-import { API_URL, API_KEY } from "./config.js";
-import { AJAX } from "./helpers.js";
+import { API_URL, API_KEY, SUPPORTED_COUNTRY_CODES } from "./config.js";
+import { AJAX, amountRatioMultiplier, numberFormatter } from "./helpers.js";
 export const state = {
 	search: {
 		query: ``,
@@ -28,11 +28,11 @@ export const loadConversionRates = async (query, amount) => {
 		state.result = state.search.rates.map((rate) => {
 			return {
 				baseCode: rate[0],
-				ratio: rate[1],
-				finalAmount: +(rate[1] * amount).toFixed(3),
+				ratio: +rate[1],
+				finalAmount: amountRatioMultiplier(+amount, +rate[1]),
 			};
 		});
-		// console.table(state.result);
+		console.table(typeof state.result.finalAmount);
 	} catch (error) {
 		throw error;
 	}
@@ -52,9 +52,9 @@ export const loadPairConversionRates = async (queries, amount) => {
 			{
 				baseCode,
 				targetCode,
-				ratio,
-				amount,
-				finalAmount: +(amount * ratio).toFixed(3),
+				ratio: numberFormatter(+ratio, 4),
+				currAmount: +amount,
+				finalAmount: amountRatioMultiplier(+amount, +ratio, 4),
 			},
 		];
 

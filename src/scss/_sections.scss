@@ -1,0 +1,19 @@
+.main {
+	&.grid-enabled {
+		display: grid;
+		padding: 2rem;
+
+		grid-template-rows: repeat(auto-fit, minmax(1fr, 1fr));
+	}
+
+	.illustration {
+		display: flex;
+		justify-content: center;
+		img {
+			object-fit: contain;
+			width: 60%;
+			max-width: 300px;
+			height: auto;
+		}
+	}
+}

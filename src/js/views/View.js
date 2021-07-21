@@ -1,30 +1,24 @@
 import { SUPPORTED_COUNTRY_CODES } from "../config.js";
 
 export class View {
+	loaderElement = document.getElementById("loader");
+	loadOptions = document.getElementById("loadOptions");
 	mainElement = document.getElementById("main");
+	navbrandElement = document.getElementById("nav-brand");
 	tabButtons = null;
-	clearRender() {
-		this.mainElement.innerHTML = "";
+
+	autoRemoveLoader() {
+		window.addEventListener("load", (E) => {
+			document.querySelector(".loader").classList.toggle("remove");
+		});
 	}
 
-	renderNavbar() {
-		const markup = `
-        <nav class="navbar">
-            <div class="container-fluid">
-                <div class="nav-brand pad-l-2">Convertio</div>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a href="https://github.com/mr-sonalia" target="_blank" rel="noopener noreferrer" class="nav-link">Github</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://www.linkedin.com/in/yash-sonalia/" target="_blank" rel="noopener noreferrer" class="nav-link">LinkedIn</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        `;
+	toggleLoader() {
+		document.querySelector(".loader").classList.toggle("remove");
+	}
 
-		document.body.insertAdjacentHTML("afterbegin", markup);
+	clearRender() {
+		this.mainElement.innerHTML = "";
 	}
 
 	renderInputForm(markup) {
@@ -35,16 +29,17 @@ export class View {
 	addSearchHandler(handler) {
 		this.renderInputForm(this.markup);
 		document.querySelector(".form").addEventListener("submit", (Event) => {
+			this.toggleLoader();
 			Event.preventDefault();
 			handler();
 		});
 	}
 
-	tabbedButtonStateEvent(handlerA, handlerB) {
+	initEvents(handlerA, handlerB) {
 		handlerA();
 		this.tabButtons = document.querySelectorAll(".tab-button");
 		this.tabButtons.forEach((button) => {
-			button.addEventListener("click", (Event) => {
+			button.addEventListener("click", () => {
 				this.tabButtons.forEach((tBtn) => tBtn.classList.remove("active"));
 				button.classList.toggle("active");
 				if (button.id === "conversion-rates") handlerA();
@@ -54,7 +49,7 @@ export class View {
 	}
 
 	renderSupportedCounties() {
-		return SUPPORTED_COUNTRY_CODES.map((code) => `<option>${code.toUpperCase()}</option>`).join("");
+		return SUPPORTED_COUNTRY_CODES.map((obj) => `<option>${obj.code.toUpperCase()} (${obj.country})</option>`).join("");
 	}
 
 	renderError(error) {

@@ -6,7 +6,7 @@ class ConversionratesView extends View {
 	markup = `
 		<form class="form pad-l-2 pad-r-2 mar-t-4" method="get">
 			<div class="mar-b-3 input-field-container">
-				<label for="base-currency" class="label mar-b-1">Select base currency</label>
+				<label for="base-currency" class="label mar-b-1">Select base code</label>
 				<input class="form-control input-field" list="base-currencies" name="base-currency" id="base-currency" placeholder="Select any one" required/>
 				<datalist id="base-currencies">
 				${this.renderSupportedCounties()}
@@ -14,8 +14,8 @@ class ConversionratesView extends View {
 			</div>
 			<div class="mar-b-6 input-field-container">
 				<label for="amount" class="label mar-b-1">Enter amount</label>
-				<div class="base-currency-holder">
-					<span class="base-currency">AMT</span>
+				<div class="base-currency-holder holder-type-b">
+					<span class="base-currency small">AMOUNT</span>
 				</div>
 				<input type="number" min="0" class="form-control input-field numeric" id="amount" aria-describedby="null" placeholder="500.50" step="any" required />
 			</div>
@@ -38,7 +38,7 @@ class ConversionratesView extends View {
 				return `<tr class="tr">
                         <td class="td clr-green-200">${item.baseCode}</td>
                         <td class="td">${item.ratio}</td>
-                        <td class="td text-align-right">${numberFormatter(item.finalAmount)}</td>
+                        <td class="td text-align-right">${item.finalAmount}</td>
                     </tr>`;
 			})
 			.join("");
@@ -47,7 +47,7 @@ class ConversionratesView extends View {
 		<form class="form pad-l-2 pad-r-2 mar-t-3" method="get">
 			<div class="mar-b-2 input-field-container">
 				<label for="amount" class="label mar-b-1">Current amount</label>
-				<div class="base-currency-holder">
+				<div class="base-currency-holder holder-type-a">
 					<span class="base-currency">${baseCode}</span>
 				</div>
 				<input
@@ -58,6 +58,8 @@ class ConversionratesView extends View {
 					aria-describedby="null"
 					placeholder="500.50"
 					step="any"
+					disabled
+					value ="${amount}"
 				/>
 			</div>
 		</form>
@@ -78,9 +80,10 @@ class ConversionratesView extends View {
 
 		this.mainElement.insertAdjacentHTML("beforeend", markup);
 		document.getElementById("amount").value = amount;
+		this.toggleLoader();
 	}
 	getQuery() {
-		return document.querySelector("#base-currency").value;
+		return `${document.querySelector("#base-currency").value}`.slice(0, 3).toUpperCase();
 	}
 	getAmount() {
 		return document.getElementById("amount").value;

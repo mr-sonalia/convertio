@@ -1,7 +1,8 @@
 import { TIMEOUT_SEC } from "./config";
 
-export const amountRatioMultiplier = (amount, ratio) => amount * ratio;
+export const amountRatioMultiplier = (amount, ratio, fraction = 3) => numberFormatter(amount * ratio, fraction);
 
+// numberFormatter(item.finalAmount)
 const timeout = function (s) {
 	return new Promise(function (_, reject) {
 		setTimeout(function () {
@@ -24,7 +25,10 @@ export const AJAX = async (url) => {
 	}
 };
 
-export const numberFormatter = (value) => {
-	return new Intl.NumberFormat("en-IN").format(value);
-	// console.log(value);
-};
+// prettier-ignore
+export const numberFormatter = (value, fraction) =>
+	new Intl.NumberFormat("en-IN", 
+	{ 
+		minimumFractionDigits: fraction, 
+		minimumIntegerDigits: 1 
+	}).format(+value);

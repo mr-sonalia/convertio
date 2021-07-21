@@ -21,8 +21,8 @@ class PairConversionView extends View {
 			</div>
 			<div class="mar-b-6 input-field-container">
 				<label for="amount" class="label mar-b-1">Enter amount</label>
-				<div class="base-currency-holder">
-					<span class="base-currency">AMT</span>
+				<div class="base-currency-holder holder-type-b">
+					<span class="base-currency small">AMOUNT</span>
 				</div>
 				<input type="number" min="0" class="form-control input-field numeric" id="amount" aria-describedby="null" placeholder="500.50" step="any" required/>
 			</div>
@@ -46,29 +46,31 @@ class PairConversionView extends View {
 			</div>
 			<div class="mar-b-3 input-field-container">
 				<label for="amount" class="label mar-b-1">Base amount</label>
-				<div class="base-currency-holder">
+				<div class="base-currency-holder holder-type-a">
 					<span class="base-currency">${result.baseCode}</span>
 				</div>
-				<input type="number" min="0" class="form-control input-field numeric" id="amount" aria-describedby="null" placeholder="500.50" value="${result.amount}"  step="any"  />
+				<input type="text" min="0" class="form-control input-field numeric" id="base-amount" aria-describedby="null" placeholder="500.50" value="${result.currAmount}"  step="any" disabled />
 			</div>
 			<div class="mar-b-3 input-field-container">
 				<label for="amount" class="label mar-b-1">Target amount</label>
-				<div class="base-currency-holder">
+				<div class="base-currency-holder holder-type-a">
 					<span class="base-currency">${result.targetCode}</span>
 				</div>
-				<input type="number" min="0" class="form-control input-field numeric" id="amount" aria-describedby="null" placeholder="500.50" value=${result.finalAmount}  step="any" />
+				<input type="text" min="0" class="form-control input-field numeric" id="target-amount" aria-describedby="null" placeholder="500.50" value="${result.finalAmount}" step="any" disabled />
 			</div>
 		</form>
 		`;
 
 		this.mainElement.insertAdjacentHTML("beforeend", markup);
+		this.toggleLoader();
 	}
 
 	getQuery() {
 		let baseCodes = [];
 		// prettier-ignore
 		document.querySelectorAll("#base-currency")
-        .forEach((field, index) => (baseCodes[index] = field.value));
+        .forEach((field, index) => 
+		(baseCodes[index] = `${field.value}`.slice(0,3).toUpperCase()));
 
 		return baseCodes;
 	}

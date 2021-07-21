@@ -22,6 +22,16 @@
 	}
 }
 
+// * Hide Content
+
+.hide-content {
+	visibility: hidden;
+	height: 0rem;
+	margin: 0rem !important;
+	padding: 0rem !important;
+	z-index: -1;
+}
+
 // * Margin
 
 .mar-t {
