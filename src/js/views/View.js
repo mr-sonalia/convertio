@@ -49,7 +49,7 @@ export class View {
 	}
 
 	renderSupportedCounties() {
-		return SUPPORTED_COUNTRY_CODES.map((obj) => `<option>${obj.code.toUpperCase()} (${obj.country})</option>`).join("");
+		return SUPPORTED_COUNTRY_CODES.map((obj) => `<option>${obj.code.toUpperCase()} (${obj.fullName})</option>`).join("");
 	}
 
 	renderError(error) {
