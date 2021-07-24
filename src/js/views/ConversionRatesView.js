@@ -29,6 +29,7 @@ class ConversionratesView extends View {
 		`;
 
 	renderResults(baseCode, amount, tableData) {
+		amount = numberFormatter(+amount, 4);
 		this.clearRender();
 		this.tableContent = tableData
 			.map((item) => {
@@ -59,7 +60,7 @@ class ConversionratesView extends View {
 					placeholder="500.50"
 					step="any"
 					disabled
-					value ="${numberFormatter(amount)}"
+					value ="${amount}"
 				/>
 			</div>
 		</form>

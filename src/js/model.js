@@ -9,14 +9,6 @@ export const state = {
 	result: [],
 };
 
-const createConversionRateObject = (data) => {
-	const { result } = data;
-	return {
-		baseCode: result.base_code,
-		conversionRates: result.conversion_rates,
-	};
-};
-
 export const loadConversionRates = async (query, amount) => {
 	state.search.query = query;
 	state.search.amount = amount;
@@ -28,8 +20,8 @@ export const loadConversionRates = async (query, amount) => {
 		state.result = state.search.rates.map((rate) => {
 			return {
 				baseCode: rate[0],
-				ratio: +rate[1],
 				finalAmount: amountRatioMultiplier(+amount, +rate[1]),
+				ratio: numberFormatter(+rate[1], 4),
 			};
 		});
 	} catch (error) {
@@ -51,9 +43,9 @@ export const loadPairConversionRates = async (queries, amount) => {
 			{
 				baseCode,
 				targetCode,
-				ratio: numberFormatter(+ratio, 4),
-				currAmount: numberFormatter(+amount, 4),
-				finalAmount: amountRatioMultiplier(+amount, +ratio, 4),
+				currAmount: numberFormatter(+amount, 6),
+				finalAmount: amountRatioMultiplier(+amount, +ratio, 6),
+				ratio: numberFormatter(+ratio, 6),
 			},
 		];
 
@@ -62,5 +54,3 @@ export const loadPairConversionRates = async (queries, amount) => {
 		throw error;
 	}
 };
-// loadConversionRates("USD", 1000);
-// loadPairConversionRates(`INR/USD`, 1000);

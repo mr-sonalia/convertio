@@ -1,13 +1,13 @@
 import { TIMEOUT_SEC } from "./config";
 
-export const amountRatioMultiplier = (amount, ratio, fraction = 3) => numberFormatter(amount * ratio, fraction);
+export const amountRatioMultiplier = (amount, ratio, fraction) => numberFormatter(+amount * +ratio, fraction);
 
 // numberFormatter(item.finalAmount)
-const timeout = function (s) {
+export const timeout = function (sec) {
 	return new Promise(function (_, reject) {
 		setTimeout(function () {
-			reject(new Error(`Request took too long! Timeout after ${s} second`));
-		}, s * 1000);
+			reject(new Error(`Request took too long! Timeout after ${sec} second`));
+		}, sec * 1000);
 	});
 };
 
@@ -26,9 +26,14 @@ export const AJAX = async (url) => {
 };
 
 // prettier-ignore
-export const numberFormatter = (value, fraction = 4) =>
-	new Intl.NumberFormat("en-IN", 
-	{ 
-		minimumFractionDigits: fraction, 
-		minimumIntegerDigits: 1 
-	}).format(+value);
+export const numberFormatter = (value, fraction = 4) => {
+	let [integer, decimal] = value.toString().split(".")
+	
+	if(integer == null || integer == NaN || integer == "") integer = "0"
+	if(decimal == null || decimal == NaN || decimal == "") decimal = "0000"
+	 
+	return[
+		new Intl.NumberFormat('en-IN').format(integer), 
+		decimal.slice(0, fraction).padEnd(fraction, "0")
+	].join('.')
+ }
