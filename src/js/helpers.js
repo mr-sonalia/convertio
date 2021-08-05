@@ -14,7 +14,6 @@ export const timeout = function (sec) {
 export const AJAX = async (url) => {
 	try {
 		const response = await Promise.race([fetch(url), timeout(TIMEOUT_SEC)]);
-
 		const data = await response.json();
 
 		if (!response.ok) throw new Error("Could not find what you were looking for 🙁");
@@ -29,8 +28,8 @@ export const AJAX = async (url) => {
 export const numberFormatter = (value, fraction = 4) => {
 	let [integer, decimal] = value.toString().split(".")
 	
-	if(integer == null || integer == NaN || integer == "") integer = "0"
-	if(decimal == null || decimal == NaN || decimal == "") decimal = "0000"
+	if(integer === null || integer === NaN || integer === "") integer = "0"
+	if(decimal === null || decimal === NaN || decimal === "") decimal = "0000"
 	 
 	return[
 		new Intl.NumberFormat('en-IN').format(integer), 
